@@ -1,0 +1,19 @@
+# Normalize line endings: all text files stored as LF, checked out as LF.
+# This removes the "LF will be replaced by CRLF" noise on Windows regardless of
+# core.autocrlf.
+* text=auto eol=lf
+
+# Binary / non-text artifacts must never be line-ending normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tif binary
+*.tiff binary
+*.pt binary
+*.pth binary
+*.pkl binary
+*.pyc binary
+*.db binary
+*.sqlite3 binary
+*.npy binary
+*.parquet binary

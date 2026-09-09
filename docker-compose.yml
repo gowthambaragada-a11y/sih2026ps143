@@ -1,0 +1,43 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      - OILTRACE_USE_SQLITE=1
+      - OILTRACE_MODELS_DIR=/app/models
+    ports:
+      - "8000:8000"
+    volumes:
+      - oiltrace-data:/app/backend/data
+      - oiltrace-artifacts:/app/backend/artifacts
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+# Optional production persistence (PostGIS) — enable to replace the SQLite
+# fallback. The store layer also writes the same rows via SQLAlchemy URLs.
+#  db:
+#    image: postgis/postgis:16-3.4
+#    environment:
+#      - POSTGRES_USER=oil
+#      - POSTGRES_PASSWORD=oil
+#      - POSTGRES_DB=oiltrace
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U oil"]
+#      interval: 5s
+
+volumes:
+  oiltrace-data:
+  oiltrace-artifacts:
+  # pgdata:

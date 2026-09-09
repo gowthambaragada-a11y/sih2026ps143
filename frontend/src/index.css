@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background-color: #030712;
+}
+
+.maplibregl-popup-content {
+  background: #111827;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  border-radius: 8px;
+}
+.maplibregl-popup-tip {
+  border-top-color: #111827;
+}

@@ -1,0 +1,21 @@
+{
+  "version": "v1",
+  "kind": "origin_xgboost",
+  "features": [
+    "release_lat",
+    "release_lon",
+    "drift_duration_h",
+    "release_time_offset_h",
+    "wind_speed",
+    "wind_dir",
+    "current_speed",
+    "current_dir",
+    "dist_to_slick_km",
+    "trajectory_origin_distance_km",
+    "path_length_km",
+    "slick_endpoint_distance_km",
+    "shape_similarity",
+    "area_similarity",
+    "uncertainty_km"
+  ]
+}

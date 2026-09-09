@@ -1,0 +1,40 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+*.egg
+build/
+dist-packages/
+
+# --- Node / frontend build ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Runtime data & generated artifacts (reproducible locally via scripts) ---
+data/
+backend/data/
+backend/artifacts/
+*.log
+*.db
+*.sqlite3
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Keep out of VCS: secrets & environment ---
+.env
+.env.*
+!.env.example

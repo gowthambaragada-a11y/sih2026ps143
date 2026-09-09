@@ -1,0 +1,12 @@
+.git
+.gitignore
+**/__pycache__
+**/*.pyc
+backend/data
+backend/artifacts
+backend/models
+node_modules
+frontend/dist
+data
+*.log
+*.db

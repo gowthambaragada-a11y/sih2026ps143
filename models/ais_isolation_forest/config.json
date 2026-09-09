@@ -1,0 +1,1 @@
+{"version": "v1", "features": ["mean_speed_change", "std_speed", "course_change_deg", "route_deviation", "stop_time_h", "turn_rate_deg_s", "max_gap_min", "gap_fraction"]}
