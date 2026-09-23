@@ -122,4 +122,6 @@ export interface AnalysisBundle {
   originMap: OriginMap | null;
   modelVersions: Record<string, string>;
   warnings: string[];
+  /** true when the live backend was unreachable and embedded synthetic data is shown. */
+  offline?: boolean;
 }

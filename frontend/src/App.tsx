@@ -85,6 +85,13 @@ export default function App() {
             {error} — make sure the backend is running (uvicorn app.main:app on :8000).
           </div>
         )}
+        {bundle?.offline && (
+          <div className="bg-amber-900/40 px-4 py-2 text-xs text-amber-200">
+            ⚠ OFFLINE DEMO — no backend API reachable on this host; showing the
+            embedded synthetic reference scenario (SIH-2026-SPILL-001). Run the
+            FastAPI stack locally for live analysis.
+          </div>
+        )}
         {!error && !bundle && (
           <div className="flex flex-1 items-center justify-center text-sm text-gray-400">
             {loading ? "Running satellite → drift → AIS → attribution pipeline…" : "No data"}
