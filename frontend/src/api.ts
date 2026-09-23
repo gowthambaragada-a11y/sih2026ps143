@@ -20,15 +20,25 @@ const DEMO_OFFLINE_MESSAGE =
   "scenario (SIH-2026-SPILL-001). Run the FastAPI stack locally for live analysis.";
 
 async function get<T>(path: string): Promise<T> {
-  const r = await fetch(`${BASE}${path}`);
-  if (!r.ok) throw new Error(`${path}: ${r.status} ${await r.text()}`);
-  return r.json() as Promise<T>;
+  try {
+    const r = await fetch(`${BASE}${path}`);
+    if (!r.ok) throw new Error(`${path}: ${r.status} ${await r.text()}`);
+    return (await r.json()) as T;
+  } catch (e) {
+    if (e instanceof Error) throw e;
+    throw new Error(`${path}: failed to fetch`);
+  }
 }
 
 async function post<T>(path: string): Promise<T> {
-  const r = await fetch(`${BASE}${path}`, { method: "POST" });
-  if (!r.ok) throw new Error(`${path}: ${r.status} ${await r.text()}`);
-  return r.json() as Promise<T>;
+  try {
+    const r = await fetch(`${BASE}${path}`, { method: "POST" });
+    if (!r.ok) throw new Error(`${path}: ${r.status} ${await r.text()}`);
+    return (await r.json()) as T;
+  } catch (e) {
+    if (e instanceof Error) throw e;
+    throw new Error(`${path}: failed to fetch`);
+  }
 }
 
 export async function runAnalysis(
@@ -37,75 +47,82 @@ export async function runAnalysis(
   function demoBundle(): AnalysisBundle {
     const bundle = JSON.parse(JSON.stringify(demoData)) as AnalysisBundle;
     bundle.offline = true;
-    bundle.warnings = Array.from(
-      new Set([...bundle.warnings, DEMO_OFFLINE_MESSAGE]),
-    );
+    const warns = Array.isArray(bundle.warnings) ? bundle.warnings : [];
+    bundle.warnings = Array.from(new Set([...warns, DEMO_OFFLINE_MESSAGE]));
     return bundle;
   }
 
-  let meta: AnalyzeResponse;
   try {
-    meta = await post<AnalyzeResponse>(
-      `/events/${encodeURIComponent(eventId)}/analyze`,
-    );
-  } catch (e) {
-    return demoBundle();
-  }
-
-  try {
-    const detection = await get<DetectionResponse>(
-      `/events/${encodeURIComponent(eventId)}/detection`,
-    );
-    const driftBackward = await get<DriftResult>(
-      `/events/${encodeURIComponent(eventId)}/drift/backward`,
-    );
-    const driftForward = await get<DriftResult>(
-      `/events/${encodeURIComponent(eventId)}/drift/forward`,
-    );
-    const origin = await get<OriginResponse>(
-      `/events/${encodeURIComponent(eventId)}/origins`,
-    );
-    const attribution = await get<AttributionResponse>(
-      `/events/${encodeURIComponent(eventId)}/attribution`,
-    );
-    const vessels = await get<CandidateVessel[]>(
-      `/events/${encodeURIComponent(eventId)}/ais/vessels`,
-    );
-
-    let originMap: OriginMap | null = null;
+    let meta: AnalyzeResponse;
     try {
-      originMap = await get<OriginMap>(
-        `/events/${encodeURIComponent(eventId)}/origins/map`,
+      meta = await post<AnalyzeResponse>(
+        `/events/${encodeURIComponent(eventId)}/analyze`,
       );
-    } catch {
-      originMap = null;
+    } catch (e) {
+      console.warn("Backend unreachable, showing embedded demo scenario.", e);
+      return demoBundle();
     }
 
-    const tracks: Record<string, VesselTrack> = {};
-    for (const v of vessels) {
+    try {
+      const detection = await get<DetectionResponse>(
+        `/events/${encodeURIComponent(eventId)}/detection`,
+      );
+      const driftBackward = await get<DriftResult>(
+        `/events/${encodeURIComponent(eventId)}/drift/backward`,
+      );
+      const driftForward = await get<DriftResult>(
+        `/events/${encodeURIComponent(eventId)}/drift/forward`,
+      );
+      const origin = await get<OriginResponse>(
+        `/events/${encodeURIComponent(eventId)}/origins`,
+      );
+      const attribution = await get<AttributionResponse>(
+        `/events/${encodeURIComponent(eventId)}/attribution`,
+      );
+      const vessels = await get<CandidateVessel[]>(
+        `/events/${encodeURIComponent(eventId)}/ais/vessels`,
+      );
+
+      let originMap: OriginMap | null = null;
       try {
-        tracks[v.mmsi] = await get<VesselTrack>(
-          `/events/${encodeURIComponent(eventId)}/ais/vessels/${v.mmsi}/track`,
+        originMap = await get<OriginMap>(
+          `/events/${encodeURIComponent(eventId)}/origins/map`,
         );
-      } catch {
-        /* ignore track failures */
+      } catch (e) {
+        console.warn("origins/map unavailable, continuing.", e);
+        originMap = null;
       }
-    }
 
-    return {
-      event_id: eventId,
-      detection,
-      driftBackward,
-      driftForward,
-      origin,
-      attribution,
-      vessels,
-      tracks,
-      originMap,
-      modelVersions: meta.model_versions,
-      warnings: meta.warnings,
-    };
+      const tracks: Record<string, VesselTrack> = {};
+      for (const v of vessels) {
+        try {
+          tracks[v.mmsi] = await get<VesselTrack>(
+            `/events/${encodeURIComponent(eventId)}/ais/vessels/${v.mmsi}/track`,
+          );
+        } catch (e) {
+          console.warn(`track for ${v.mmsi} unavailable, skipping.`, e);
+        }
+      }
+
+      return {
+        event_id: eventId,
+        detection,
+        driftBackward,
+        driftForward,
+        origin,
+        attribution,
+        vessels,
+        tracks,
+        originMap,
+        modelVersions: meta.model_versions,
+        warnings: meta.warnings,
+      };
+    } catch (e) {
+      console.warn("Analysis partially failed, falling back to demo scenario.", e);
+      return demoBundle();
+    }
   } catch (e) {
+    console.error("runAnalysis failed entirely, falling back to demo scenario.", e);
     return demoBundle();
   }
 }

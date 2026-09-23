@@ -1,0 +1,24 @@
+{
+  "name": "sih2026ps143",
+  "version": "1.0.0",
+  "description": "> Automated, evidence-based oil-spill *origin* estimation and *vessel attribution* > from satellite SAR + AIS, built for **SIH 2026 · Problem Statement 143 (NTRO)**.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gowthambaragada-a11y/sih2026ps143.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/gowthambaragada-a11y/sih2026ps143/issues"
+  },
+  "homepage": "https://github.com/gowthambaragada-a11y/sih2026ps143#readme"
+}
