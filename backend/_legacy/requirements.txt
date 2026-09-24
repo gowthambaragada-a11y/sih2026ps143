@@ -1,0 +1,26 @@
+# OILTRACE-AI backend — runtime dependencies (API + ML pipeline).
+# PyTorch (CPU) is installed separately in the Docker build; see Dockerfile.
+#
+# Cloud note (Render/Railway/Fly.io):
+#   - Set DATABASE_URL for Postgres/PostGIS and install `psycopg[binary]`
+#     (commented below) instead of relying on the SQLite fallback.
+#   - Set CORS_ORIGINS to your dashboard origin (comma-separated).
+numpy==2.1.3
+pandas==2.2.3
+scipy==1.15.3
+scikit-learn==1.6.1
+xgboost==3.4.1
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+python-multipart==0.0.20   # multipart/form-data for POST /api/v1/detect/file
+pydantic==2.10.3
+pydantic-settings==2.6.1
+sqlalchemy==2.0.39
+python-dotenv==1.0.1
+rasterio==1.5.1
+shapely==2.1.2
+Pillow==11.1.0
+
+# Optional for production:
+# psycopg[binary]==3.2.1   # PostGIS production DB driver
+# opendrift==1.12.0         # higher-fidelity drift engine (large, GDAL-dependent)

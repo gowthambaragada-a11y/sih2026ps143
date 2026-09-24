@@ -1,7 +1,6 @@
-# Normalize line endings: all text files stored as LF, checked out as LF.
-# This removes the "LF will be replaced by CRLF" noise on Windows regardless of
-# core.autocrlf.
-* text=auto eol=lf
+# Store line endings exactly as-is (no CRLF/LF conversion).
+# Disables the "CRLF will be replaced by LF" warnings from git add on Windows.
+* -text
 
 # Binary / non-text artifacts must never be line-ending normalized.
 *.png binary

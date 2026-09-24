@@ -1,0 +1,1 @@
+"""Core backend service wrappers (detection, hindcast, attribution)."""

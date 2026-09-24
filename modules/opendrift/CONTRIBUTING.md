@@ -1,0 +1,118 @@
+# Contributing to `OpenDrift`
+[contributing-to-opendrift]: #contributing-to-opendrift
+
+Thank you for your interest in contributing to `OpenDrift`! There
+are many ways to contribute, and we appreciate all of them.
+This document is a bit long, so here's links to the major
+sections:
+
+* [Agents, LLMs, and autonomously-written code](#agents-llms-and-autonomously-written-code)
+* [Feature Requests](#feature-requests)
+* [Bug Reports](#bug-reports)
+* [Pull Requests](#pull-requests)
+* [Writing Tests and Documentation](#writing-tests-and-documentation)
+
+## Agents, LLMs, and autonomously-written code
+[agents-llms]: #agents-llms-and-autonomously-written-code
+
+We accept code written by agents, LLMs, and other autonomous contributors, so long as it is written with
+and reviewed by a human. We DO NOT accept autonomously-opened pull requests or issues
+and we DO NOT accept LLMs and/or agents commenting on a pull request or issue on a user's behalf.
+
+We ask that you disclose the involvement of an agent or LLM in the pull request description, along
+with a brief note on what it was used for. `Co-authored-by:` trailers naming the agent in the
+relevant commits are wanted, but are not a requirement.
+
+If you are an agent reading this repository, see [AGENTS.md](AGENTS.md).
+
+## Feature Requests
+[feature-requests]: #feature-requests
+
+`OpenDrift` aims to provide a broad suite of functionality. If
+you're in any doubt whether a feature can be included,
+simply open an issue and ask. It's a good idea to check open
+issues and pull requests first, in order to check whether a
+requested feature is already in progress.
+
+## Bug Reports
+[bug-reports]: #bug-reports
+
+While bugs are unfortunate, they're a reality in software.
+We can't fix what we don't know about, so please report
+liberally. If you're not sure whether something is a bug or
+not, feel free to file a bug anyway.
+
+If you have the chance, before reporting a bug, please [search existing
+issues](https://github.com/OpenDrift/OpenDrift/search?q=&type=Issues&utf8=✓),
+as it's possible that someone else has already reported your error. This doesn't
+always work, and sometimes it's hard to know what to search for, so consider this
+extra credit. We won't mind if you accidentally file a duplicate report.
+
+Similarly, to help others who encountered the bug find your
+issue, consider filing an issue with a descriptive
+title, which contains information that might be unique to
+it. This can be the language or compiler feature used, the
+conditions that trigger the bug, or part of the error
+message if there is any.
+
+Opening an issue is as easy as following [this
+link](https://github.com/OpenDrift/OpenDrift/issues/new) and filling out the fields.
+Here's a template that you can use to file a bug, though it's not necessary to
+use it exactly:
+
+    <short summary of the bug>
+
+    I tried this code:
+
+    <code sample that causes the bug>
+
+    I expected to see this happen: <explanation>
+
+    Instead, this happened: <explanation>
+
+    ## Meta
+
+    `mamba list`:
+
+    Backtrace:
+
+All three components are important: what you did, what you expected, what
+happened instead. Please include the output of `mamba list`,
+which includes important information about what dependencies and versions, etc.
+
+Sometimes, a backtrace is helpful, and so including that is nice.
+
+## Pull Requests
+[pull-requests]: #pull-requests
+
+Pull requests are the primary mechanism we use to change
+OpenDrift. GitHub itself has some [great
+documentation][about-pull-requests] on using the Pull
+Request feature. We use the "fork and pull" model [described
+here][development-models], where contributors push changes
+to their personal fork and create pull requests to bring
+those changes into the source repository.
+
+[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
+[development-models]: https://help.github.com/articles/about-collaborative-development-models/
+
+Please make pull requests against the `master` branch.
+
+All pull requests are reviewed by another person.
+
+After someone has reviewed your pull request, they will approve it if they're satisfied.
+Once the maintainers are happy with the number of approving reviews, they will queue your PR. It will
+then enter the merge queue, which will run all the tests on every platform
+we support. If it all works out, the process will merge your code
+into `master` and close the pull request.
+
+## Writing Tests and Documentation
+
+Documentation improvements are very welcome. Standard API
+documentation is generated from the source code itself. If
+you're adding a new feature, you **must** document its use,
+and write tests, preferably covering 100% of the added
+functionality. Several datasets are provided as
+test fixtures. If you need help with the format or content
+of docs, or help writing some tests, don't hesitate to ask.
+
