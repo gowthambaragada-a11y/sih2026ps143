@@ -1,44 +1,40 @@
+import type { LayerToggles } from "../types";
+
 interface Props {
-  showBackward: boolean;
-  showForward: boolean;
-  showOrigin: boolean;
-  showSlick: boolean;
-  onChange: (key: string, value: boolean) => void;
+  toggles: LayerToggles;
+  onChange: (key: keyof LayerToggles) => void;
 }
 
-const TOGGLES = [
+const TOGGLES: Array<{ key: keyof LayerToggles; label: string; color: string }> = [
   { key: "showSlick", label: "Detected slick", color: "#f97316" },
   { key: "showOrigin", label: "Origin region + candidates", color: "#facc15" },
   { key: "showBackward", label: "Backward drift", color: "#22d3ee" },
   { key: "showForward", label: "Forward forecast", color: "#a3e635" },
-] as const;
+];
 
-export function LayerToggle(props: Props) {
-  const vals = {
-    showSlick: props.showSlick,
-    showOrigin: props.showOrigin,
-    showBackward: props.showBackward,
-    showForward: props.showForward,
-  };
+export function LayerToggle({ toggles, onChange }: Props) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-col gap-1.5">
       {TOGGLES.map((t) => {
-        const on = vals[t.key];
+        const on = toggles[t.key];
         return (
           <button
             key={t.key}
-            onClick={() => props.onChange(t.key, !on)}
-            className={`rounded-full border px-3 py-1 text-xs transition ${
+            onClick={() => onChange(t.key)}
+            className={`flex items-center gap-2 rounded border px-3 py-1.5 text-left text-xs transition ${
               on
                 ? "border-gray-400 bg-gray-700 text-white"
-                : "border-gray-700 bg-gray-900 text-gray-500"
+                : "border-gray-700 bg-gray-900 text-gray-500 hover:border-gray-500"
             }`}
           >
             <span
-              className="mr-1.5 inline-block h-2 w-2 rounded-full"
-              style={{ backgroundColor: t.color }}
+              className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
+              style={{ backgroundColor: t.color, boxShadow: on ? "0 0 6px " + t.color : "none" }}
             />
-            {t.label}
+            <span>{t.label}</span>
+            <span className={`ml-auto text-[10px] font-bold ${on ? "text-emerald-300" : "text-gray-600"}`}>
+              {on ? "ON" : "OFF"}
+            </span>
           </button>
         );
       })}

@@ -10,7 +10,9 @@ router = APIRouter(tags=["meta"])
 
 @router.get("/health")
 def health() -> dict:
-    return {"status": "ok", "service": "oiltrace-ai", "version": settings.version}
+    # Lightweight liveness probe — intentionally independent of model/db
+    # loading so load balancers can check liveness even during cold starts.
+    return {"status": "healthy", "service": "live-pipeline", "version": settings.version}
 
 
 @router.get("/models")

@@ -1,0 +1,3 @@
+# OILTRACE-AI backend — Render / Fly.io web process.
+# Render injects $PORT; the shell default keeps local `uvicorn`-less starts working.
+web: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}

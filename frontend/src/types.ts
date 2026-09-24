@@ -125,3 +125,16 @@ export interface AnalysisBundle {
   /** true when the live backend was unreachable and embedded synthetic data is shown. */
   offline?: boolean;
 }
+
+export interface LogEntry {
+  at: string;
+  level: "info" | "ok" | "warn" | "error";
+  msg: string;
+}
+
+export interface LayerToggles {
+  showBackward: boolean;
+  showForward: boolean;
+  showOrigin: boolean;
+  showSlick: boolean;
+}

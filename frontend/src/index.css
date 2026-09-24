@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+:root {
+  --oil-bg: #07111c;
+  --oil-panel: #0a1928;
+  --oil-soft: #0c1c2b;
+  --oil-edge: #20394f;
+  --oil-accent: #7cc8ff;
+  --oil-accent-deep: #4f9dff;
+  --oil-ink: #eaf4fb;
+  --oil-muted: #8fa6b9;
+}
+
 html,
 body,
 #root {
@@ -12,15 +23,36 @@ body,
 
 html,
 body {
-  background-color: #030712;
+  background-color: var(--oil-bg);
+}
+
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--oil-bg);
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--oil-edge);
+  border-radius: 8px;
 }
 
 .maplibregl-popup-content {
-  background: #111827;
-  color: #e5e7eb;
-  border: 1px solid #374151;
-  border-radius: 8px;
+  background: var(--oil-panel);
+  color: var(--oil-ink);
+  border: 1px solid var(--oil-edge);
+  border-radius: 10px;
+  font-family: inherit;
 }
 .maplibregl-popup-tip {
-  border-top-color: #111827;
+  border-top-color: var(--oil-panel);
+}
+.maplibregl-ctrl-attrib {
+  background: rgba(7, 17, 28, 0.72) !important;
+  color: #6f879b !important;
+  font-size: 10px;
+}
+.maplibregl-ctrl-attrib a {
+  color: var(--oil-accent) !important;
 }
