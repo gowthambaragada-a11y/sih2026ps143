@@ -14,8 +14,8 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .api.routers import (ais, attribution, detection, drift, health, origins,
-                          report, store)
+from .api.routers import (ais, attribution, detect, detection, drift, health,
+                          origins, report, store)
 from .core.config import settings
 from .core.logger import configure_logging, get_logger
 
@@ -54,7 +54,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-for r in (health, detection, drift, origins, ais, attribution, report, store):
+for r in (health, detect, detection, drift, origins, ais, attribution, report, store):
     app.include_router(r.router, prefix=settings.api_prefix)
 # The meta/health router is also available unprefixed (/health, /models).
 app.include_router(health.router)

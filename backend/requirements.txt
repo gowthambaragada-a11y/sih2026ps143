@@ -12,6 +12,7 @@ scikit-learn==1.6.1
 xgboost==3.4.1
 fastapi==0.141.1
 uvicorn[standard]==0.52.4
+python-multipart==0.0.20   # multipart/form-data for POST /api/v1/detect/file
 pydantic==2.10.3
 pydantic-settings==2.6.1
 sqlalchemy==2.0.39

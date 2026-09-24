@@ -138,3 +138,66 @@ export interface LayerToggles {
   showOrigin: boolean;
   showSlick: boolean;
 }
+
+/* ------------------------------------------------------------------ *
+ * Stage 3 · Detection result (image-based pipeline)
+ * ------------------------------------------------------------------ */
+export interface LatLon {
+  lat: number;
+  lon: number;
+}
+
+export interface DriftInfo {
+  bearing_deg: number;
+  speed_kmh: number;
+  direction_label: string;
+  trajectory: LatLon[];
+}
+
+export type Severity = "low" | "medium" | "high" | "critical";
+
+export interface DetectionResult {
+  event_id: string;
+  status: string;
+  model: string;
+  source: string;
+  image_size: [number, number] | null;
+  bounds: {
+    type: string;
+    bbox: [number, number, number, number];
+    geometry: { type: string; coordinates: number[][][] };
+  };
+  polygon: {
+    type: string;
+    properties: { confidence: number; severity: string; area_km2: number; perimeter_km: number; confidence_pct: number };
+    geometry: { type: string; coordinates: number[][][] };
+  };
+  masks: {
+    type: string;
+    features: Array<{ type: string; properties: { class: string; prob: number }; geometry: { type: string; coordinates: number[][][] } }>;
+  };
+  centroid: LatLon;
+  confidence: number;
+  confidence_pct: number;
+  severity: Severity;
+  area_km2: number;
+  perimeter_km: number;
+  drift: DriftInfo;
+  warnings: string[];
+  latency_ms?: number;
+  /** true when the live backend was unreachable and a mock result was synthesized. */
+  offline?: boolean;
+}
+
+export interface StoredImage {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  url: string;
+  storagePath: string;
+  uploadedAt: number;
+  progress?: number;
+  width?: number;
+  height?: number;
+}

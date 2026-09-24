@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --oil-bg: #07111c;
-  --oil-panel: #0a1928;
-  --oil-soft: #0c1c2b;
-  --oil-edge: #20394f;
-  --oil-accent: #7cc8ff;
-  --oil-accent-deep: #4f9dff;
-  --oil-ink: #eaf4fb;
-  --oil-muted: #8fa6b9;
+  --oil-bg: #0b0f19;
+  --oil-panel: #0f172a;
+  --oil-soft: #111a2e;
+  --oil-edge: #1e293b;
+  --oil-accent: #06b6d4;
+  --oil-accent-deep: #0e7490;
+  --oil-emerald: #10b981;
+  --oil-ink: #e6f1f8;
+  --oil-muted: #8496ab;
 }
 
 html,
@@ -49,10 +50,67 @@ body {
   border-top-color: var(--oil-panel);
 }
 .maplibregl-ctrl-attrib {
-  background: rgba(7, 17, 28, 0.72) !important;
-  color: #6f879b !important;
+  background: rgba(11, 15, 25, 0.72) !important;
+  color: #8496ab !important;
   font-size: 10px;
 }
 .maplibregl-ctrl-attrib a {
   color: var(--oil-accent) !important;
+}
+
+/* ---------- transitions / motion ---------- */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes radarPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 22px rgba(6, 182, 212, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
+  }
+}
+.radar-pulse {
+  animation: radarPulse 1.8s ease-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, #141d31 25%, #1b2740 37%, #141d31 63%);
+  background-size: 936px 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+.scanline {
+  animation: scanline 3.2s linear infinite;
 }
